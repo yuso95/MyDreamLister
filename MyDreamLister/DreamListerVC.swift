@@ -31,7 +31,12 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     // MARK: - Actions
     
-    
+    // Not Working !!!
+    @IBAction private func segmentControlPressed(sender: UISegmentedControl) {
+        
+        attemptFetch()
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +54,20 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
         let dateSort = NSSortDescriptor(key: "created", ascending: true)
-        fetchRequest.sortDescriptors = [dateSort]
+        let priceSort = NSSortDescriptor(key: "price", ascending: true)
+        let titleSort = NSSortDescriptor(key: "title", ascending: true)
+        
+        // Not working !!!
+        if segmentControl.selectedSegmentIndex == 0 {
+            
+            fetchRequest.sortDescriptors = [dateSort]
+        } else if segmentControl.selectedSegmentIndex == 1 {
+            
+            fetchRequest.sortDescriptors = [priceSort]
+        } else if segmentControl.selectedSegmentIndex == 2 {
+            
+            fetchRequest.sortDescriptors = [titleSort]
+        }
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         
@@ -188,11 +206,11 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         ad.saveContext()
     }
     
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == MyStoryBoard.DetailSegueID {
             if let destination = segue.destination as? ItemDetailVC {
                 if let itemToEdit = sender as? Item {
@@ -201,7 +219,7 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 }
             }
         }
-     }
+    }
     
 }
 
