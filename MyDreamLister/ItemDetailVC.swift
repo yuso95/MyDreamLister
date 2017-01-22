@@ -9,17 +9,20 @@
 import UIKit
 import CoreData
 
-class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - MyStoryBoard
     
     // MARK: - Variables/Constants/Computed Properties
     
     var stores = [Store]()
+    var item: Item!
     var itemToEdit: Item?
+    var imagePickerController: UIImagePickerController!
     
     // MARK: - Outlets
     
+    @IBOutlet private weak var thumbIMG: UIImageView!
     @IBOutlet private weak var titleTFD: UITextField!
     @IBOutlet private weak var priceTFD: UITextField!
     @IBOutlet private weak var detailTFD: UITextField!
@@ -29,7 +32,22 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
     
     @IBAction private func saveBTNPressed(sender: UIButton) {
         
-        let item = Item(context: context)
+        // Throw a nil error when pressing on save button !!!
+        
+        let image = Image(context: context)
+        image.image = thumbIMG.image
+        
+        if itemToEdit == nil {
+            
+            item = Item(context: context)
+        } else {
+            
+            item = itemToEdit
+        }
+        
+        // Just to access the item
+        
+        item.toImage = image
         
         if let title = titleTFD.text {
             
@@ -53,6 +71,23 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
         _ = navigationController?.popViewController(animated: true)
     }
     
+    // App freeze when delete is pressed !!!
+    @IBAction private func deleteBTNPressed(sender: UIBarButtonItem) {
+        
+        if itemToEdit != nil {
+            
+            context.delete(itemToEdit!)
+            ad.saveContext()
+        }
+        
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction private func addImageBTN(sender: UIButton) {
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,6 +98,9 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
         
         pickerView.delegate = self
         pickerView.dataSource = self
+        
+        imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
         
         attemptFetch()
         //        generateStores()
@@ -105,47 +143,34 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
     
     private func loadData() {
         
-        // Freezing my app when I click on the one in the button ???
-        
-        var item: Item!
-        
-        if itemToEdit == nil {
+        if let item = itemToEdit {
             
-            item = Item(context: context)
-        } else {
+            thumbIMG.image = item.toImage?.image as? UIImage
             
-            item = itemToEdit
-        }
-        
-        let title = item.title
-        
-        titleTFD.text = title
-        
-        let price = item.price
-        
-        priceTFD.text = "\(price)"
-        
-        let detail = item.details
-        
-        detailTFD.text = detail
-        
-        if let store = item.toStore {
+            titleTFD.text = item.title
             
-            var index = 0
+            priceTFD.text = "\(item.price)"
             
-            repeat {
+            detailTFD.text = item.details
+            
+            if let store = item.toStore {
                 
-                let eachStore = stores[index]
+                var index = 0
                 
-                if eachStore.name == store.name {
+                repeat {
                     
-                    pickerView.selectRow(index, inComponent: 0, animated: true)
+                    let eachStore = stores[index]
                     
-                    index += 1
-                    
-                    break
-                }
-            } while ( index < stores.count)
+                    if eachStore.name == store.name {
+                        
+                        pickerView.selectRow(index, inComponent: 0, animated: true)
+                        
+                        index += 1
+                        
+                        break
+                    }
+                } while ( index < stores.count)
+            }
         }
     }
     
@@ -169,8 +194,17 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
         return name
     }
     
+    // MARK: - ImagePickerController
     
-    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            thumbIMG.image = image
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
     
     /*
      // MARK: - Navigation

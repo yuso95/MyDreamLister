@@ -160,7 +160,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VVg-L7-OJl">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VVg-L7-OJl">
                                 <rect key="frame" x="16" y="72" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="Zui-vo-yjn"/>
@@ -173,6 +173,9 @@
                                     <constraint firstAttribute="width" constant="120" id="IaO-3d-ODp"/>
                                     <constraint firstAttribute="height" constant="120" id="Z3n-HN-cRZ"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="addImageBTNWithSender:" destination="a86-H6-61b" eventType="touchUpInside" id="xHy-bO-w2k"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xwe-5l-6V0">
                                 <rect key="frame" x="144" y="72" width="215" height="30"/>
@@ -258,12 +261,16 @@
                     <navigationItem key="navigationItem" title="Add/New" id="vGc-Qh-qkw">
                         <barButtonItem key="rightBarButtonItem" systemItem="trash" id="rk1-wf-TkH">
                             <color key="tintColor" red="1" green="0.20710553379999999" blue="0.37250994030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="deleteBTNPressedWithSender:" destination="a86-H6-61b" id="BMw-0n-HpZ"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="detailTFD" destination="3z3-2Q-kMQ" id="E4q-Vm-p1M"/>
                         <outlet property="pickerView" destination="8Zj-cQ-Q2w" id="VYD-LJ-TUP"/>
                         <outlet property="priceTFD" destination="cRn-nq-ZJV" id="sJZ-L4-WYx"/>
+                        <outlet property="thumbIMG" destination="VVg-L7-OJl" id="0Nc-su-qW4"/>
                         <outlet property="titleTFD" destination="Xwe-5l-6V0" id="mT6-dC-4Ce"/>
                     </connections>
                 </viewController>
@@ -276,7 +283,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UDM-nM-h0a" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="RWT-KE-fUq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RWT-KE-fUq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
