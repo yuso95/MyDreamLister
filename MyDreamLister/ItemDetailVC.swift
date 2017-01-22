@@ -16,6 +16,7 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
     // MARK: - Variables/Constants/Computed Properties
     
     var stores = [Store]()
+    var itemToEdit: Item?
     
     // MARK: - Outlets
     
@@ -64,7 +65,12 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
         pickerView.dataSource = self
         
         attemptFetch()
-//        generateStores()
+        //        generateStores()
+        
+        if itemToEdit != nil {
+            
+            loadData()
+        }
     }
     
     private func attemptFetch() {
@@ -95,6 +101,52 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
         store4.name = "Ebay"
         
         ad.saveContext()
+    }
+    
+    private func loadData() {
+        
+        // Freezing my app when I click on the one in the button ???
+        
+        var item: Item!
+        
+        if itemToEdit == nil {
+            
+            item = Item(context: context)
+        } else {
+            
+            item = itemToEdit
+        }
+        
+        let title = item.title
+        
+        titleTFD.text = title
+        
+        let price = item.price
+        
+        priceTFD.text = "\(price)"
+        
+        let detail = item.details
+        
+        detailTFD.text = detail
+        
+        if let store = item.toStore {
+            
+            var index = 0
+            
+            repeat {
+                
+                let eachStore = stores[index]
+                
+                if eachStore.name == store.name {
+                    
+                    pickerView.selectRow(index, inComponent: 0, animated: true)
+                    
+                    index += 1
+                    
+                    break
+                }
+            } while ( index < stores.count)
+        }
     }
     
     // MARK: - PickerView

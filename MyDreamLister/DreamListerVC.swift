@@ -104,6 +104,16 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         cell.configureCell(item: item)
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let objects = controller.fetchedObjects, objects.count > 0 {
+            
+            let item = objects[indexPath.row]
+            
+            performSegue(withIdentifier: MyStoryBoard.DetailSegueID, sender: item)
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 150
@@ -178,15 +188,20 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         ad.saveContext()
     }
     
-    /*
      // MARK: - Navigation
      
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+     
+        if segue.identifier == MyStoryBoard.DetailSegueID {
+            if let destination = segue.destination as? ItemDetailVC {
+                if let itemToEdit = sender as? Item {
+                    
+                    destination.itemToEdit = itemToEdit
+                }
+            }
+        }
      }
-     */
     
 }
 
