@@ -19,7 +19,7 @@ class ItemCell: UITableViewCell {
         
         thumbIMB.image = item.toImage?.image as? UIImage
         titleLBL.text = item.title
-        priceLBL.text = "$\(item.price)"
+        priceLBL.text = "$\(item.price)" 
         detailLBL.text = item.details
     }
 }

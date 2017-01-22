@@ -137,14 +137,14 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="0oS-os-wTx">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="a86-H6-61b" kind="show" identifier="ItemDetailNew" id="lkJ-IQ-S2i"/>
+                                <segue destination="a86-H6-61b" kind="show" identifier="ItemDetailVCNew" id="lkJ-IQ-S2i"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="segmentControl" destination="7Ri-81-kdd" id="6de-wd-efe"/>
                         <outlet property="tableView" destination="md7-d6-7Ix" id="XkG-cn-TuN"/>
-                        <segue destination="a86-H6-61b" kind="show" identifier="ItemDetail" id="AB1-Ef-lGs"/>
+                        <segue destination="a86-H6-61b" kind="show" identifier="ItemDetailVC" id="AB1-Ef-lGs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

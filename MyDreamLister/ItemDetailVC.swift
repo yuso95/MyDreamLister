@@ -37,6 +37,8 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
         let image = Image(context: context)
         image.image = thumbIMG.image
         
+        var item: Item!
+        
         if itemToEdit == nil {
             
             item = Item(context: context)
@@ -151,6 +153,8 @@ class ItemDetailVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSour
             
             priceTFD.text = "\(item.price)"
             
+            titleTFD.text = item.title
+            priceTFD.text = "\(item.price)"
             detailTFD.text = item.details
             
             if let store = item.toStore {

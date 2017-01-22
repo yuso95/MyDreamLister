@@ -16,8 +16,8 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     private struct MyStoryBoard {
         
         static let CellID = "ItemCell"
-        static let AddSegueID = "ItemDetailNew"
-        static let DetailSegueID = "ItemDetail"
+        static let AddSegueID = "ItemDetailVCNew"
+        static let DetailSegueID = "ItemDetailVC"
     }
     
     // MARK: - Variables/Constants/Computed Properties
@@ -103,7 +103,7 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             return sectionInfo.numberOfObjects
         }
         
-        return 10
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -220,7 +220,6 @@ class DreamListerVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             }
         }
     }
-    
 }
 
 extension Item {
